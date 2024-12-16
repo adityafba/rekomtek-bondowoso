@@ -69,21 +69,15 @@
                         </li>
                         <li>
                             @auth
-                            <a href="/home" class="font-bold text-primary-50 hover:text-slate-500 transition ease-in-out duration-300">
+                            <a href="/admin/dashboard" class="font-bold text-primary-50 hover:text-slate-500 transition ease-in-out duration-300">
                                 Welcome back, {{ Auth::user()->name }}
                             </a>
                             @else
-                                <a href="/login"
+                                <a href="{{ url('/admin/login') }}"
                                     class="p-3 px-6 bg-primary-50 rounded-full text-white hover:bg-primary-30 hover:text-primary-50">
                                     Login
                                 </a>
                             @endauth
-                        </li>
-                        <li>
-                            <a href="{{ url('/admin/login') }}" class="text-gray-600 hover:text-gray-900">
-                                <i class="fas fa-user-shield mr-1"></i>
-                                Admin Login
-                            </a>
                         </li>
                     </ul>
                 </nav>

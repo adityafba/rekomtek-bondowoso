@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
         // Search functionality
         if ($request->has('search') && $request->search !== '') {
-            $search = $request->search;
+            $search = str_replace(['%', '_'], ['\%', '\_'], $request->search);
             $query->where(function($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")

@@ -27,10 +27,18 @@ Route::prefix('rekomtek')->group(function () {
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
+    // Redirect /admin to dashboard if authenticated
+    Route::get('/', function () {
+        if (auth()->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('admin.login.form');
+    });
+
     // Guest routes (login, register)
     Route::middleware(['web', 'guest'])->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login.form');
-        Route::post('/login', [AuthController::class, 'login'])->name('admin.login');
+        Route::post('/login', [AuthController::class, 'login'])->name('admin.login')->middleware('login.limit');
         Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('admin.register.form');
         Route::post('/register', [AuthController::class, 'register'])->name('admin.register');
     });
