@@ -549,7 +549,7 @@
     </div>
 </div>
 
-@section('scripts')
+@push('scripts')
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
@@ -574,96 +574,57 @@
             penggunaanRadio.addEventListener('change', toggleOptions);
 
             // Initialize map
-            const defaultLat = {{ old('latitude', $application->latitude ?? -7.983908) }};
-            const defaultLng = {{ old('longitude', $application->longitude ?? 112.621391) }};
-            
-            const map = L.map('mapid').setView([defaultLat, defaultLng], 13);
+            const map = L.map('mapid').setView([-7.9084, 113.8220], 13);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: ' OpenStreetMap contributors'
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-            // Add geocoder control
-            const geocoder = L.Control.Geocoder.nominatim();
-            L.Control.geocoder({
-                geocoder: geocoder,
+            // Initialize geocoder
+            const geocoder = L.Control.geocoder({
                 defaultMarkGeocode: false
             })
             .on('markgeocode', function(e) {
-                const latlng = e.geocode.center;
-                marker.setLatLng(latlng);
-                map.setView(latlng, 16);
-                updateCoordinates(latlng);
-                
-                // Update address fields
-                const address = e.geocode.properties;
-                document.getElementById('alamat').value = [
-                    address.street,
-                    address.city,
-                    address.state
-                ].filter(Boolean).join(', ');
-                
-                if (address.state) {
-                    document.getElementById('provinsi').value = address.state;
-                }
-                if (address.city) {
-                    document.getElementById('kabupaten').value = address.city;
-                }
+                const bbox = e.geocode.bbox;
+                const poly = L.polygon([
+                    bbox.getSouthEast(),
+                    bbox.getNorthEast(),
+                    bbox.getNorthWest(),
+                    bbox.getSouthWest()
+                ]);
+                map.fitBounds(poly.getBounds());
             })
             .addTo(map);
 
-            // Initialize marker with custom icon
-            const markerIcon = L.divIcon({
-                html: '<i class="fas fa-map-marker-alt text-blue-500 text-3xl"></i>',
-                className: 'custom-marker-icon',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41]
-            });
+            let marker;
+            const latInput = document.getElementById('latitude');
+            const lngInput = document.getElementById('longitude');
 
-            let marker = L.marker([defaultLat, defaultLng], {
-                draggable: true,
-                icon: markerIcon
-            }).addTo(map);
+            // Set initial marker if coordinates exist
+            const initialLat = latInput.value;
+            const initialLng = lngInput.value;
+            if (initialLat && initialLng) {
+                marker = L.marker([initialLat, initialLng]).addTo(map);
+                map.setView([initialLat, initialLng], 13);
+            }
 
-            // Update coordinates on marker drag
-            marker.on('dragend', function(e) {
-                updateCoordinates(e.target.getLatLng());
-            });
-
-            // Handle map clicks
             map.on('click', function(e) {
-                marker.setLatLng(e.latlng);
-                updateCoordinates(e.latlng);
+                const lat = e.latlng.lat;
+                const lng = e.latlng.lng;
+                
+                // Update hidden inputs
+                latInput.value = lat;
+                lngInput.value = lng;
+                
+                // Update or create marker
+                if (marker) {
+                    marker.setLatLng([lat, lng]);
+                } else {
+                    marker = L.marker([lat, lng]).addTo(map);
+                }
             });
 
-            function updateCoordinates(latlng) {
-                const latInput = document.getElementById('latitude');
-                const lngInput = document.getElementById('longitude');
-                
-                if (!latInput || !lngInput) return;
-                
-                latInput.value = latlng.lat.toFixed(6);
-                lngInput.value = latlng.lng.toFixed(6);
-                
-                // Trigger input events
-                latInput.dispatchEvent(new Event('input'));
-                lngInput.dispatchEvent(new Event('input'));
-
-                // Update marker popup
-                marker.bindPopup(`
-                    <div class="text-center p-2">
-                        <strong class="block text-gray-700 mb-1">Lokasi yang dipilih</strong>
-                        <span class="text-sm text-gray-600">${latlng.lat.toFixed(6)}, ${latlng.lng.toFixed(6)}</span>
-                    </div>
-                `).openPopup();
-            }
-
-            // Initialize coordinates if they exist
-            if (defaultLat && defaultLng) {
-                updateCoordinates({ lat: defaultLat, lng: defaultLng });
-            }
-
-            // Handle form validation
+            // Form validation
             const form = document.querySelector('form');
             form.addEventListener('submit', function(e) {
                 const jenisIzin = document.querySelector('input[name="jenis_izin"]:checked');
@@ -683,8 +644,6 @@
             });
         });
     </script>
+@endpush
 @endsection
 
-@push('scripts')
-    @yield('scripts')
-@endpush
