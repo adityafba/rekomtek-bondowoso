@@ -35,7 +35,7 @@
         <!-- Form Content -->
         <div class="bg-white shadow rounded-lg p-6">
             <h2 class="text-2xl font-semibold text-gray-900 mb-6">Upload Dokumen Pendukung</h2>
-            <p class="text-sm text-gray-500 mb-8">Format file: PDF, JPG, JPEG, PNG, DOC, atau DOCX dengan ukuran maksimal 1.28MB per file.</p>
+            <p class="text-sm text-gray-500 rounded-lg border mb-8">Format file: PDF, JPG, JPEG, PNG, DOC, atau DOCX dengan ukuran maksimal 1.28MB per file.</p>
 
             <!-- Download Section -->
 
@@ -61,7 +61,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Gambar Lokasi/Peta Situasi</label>
                                         <input type="file" name="documents[peta_situasi]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -73,7 +73,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Detail Gambar Konstruksi</label>
                                         <input type="file" name="documents[detail_konstruksi]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -85,7 +85,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Perhitungan Struktur</label>
                                         <input type="file" name="documents[perhitungan_struktur]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -97,7 +97,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Spesifikasi Teknis</label>
                                         <input type="file" name="documents[spesifikasi_teknis]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -109,7 +109,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Rencana Operasi dan Pemeliharaan</label>
                                         <input type="file" name="documents[rencana_operasi]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -126,7 +126,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Perhitungan Geologi Teknik</label>
                                         <input type="file" name="documents[perhitungan_geologi]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -138,7 +138,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Perhitungan Hidrologi/Hidrolika</label>
                                         <input type="file" name="documents[perhitungan_hidrologi]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -150,7 +150,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Laporan Uji Model Fisik</label>
                                         <input type="file" name="documents[uji_model]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -163,7 +163,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Salinan Izin yang Akan Diperpanjang</label>
                                         <input type="file" name="documents[salinan_izin]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                            class="mt-1 block w-full text-sm text-gray-500
+                                            class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
@@ -180,11 +180,11 @@
                                 <div class="flex items-center justify-between mb-4">
                                     <div>
                                         <h3 class="text-lg font-medium text-gray-900">Surat Permohonan</h3>
-                                        <p class="text-sm text-gray-500">Surat permohonan ditujukan kepada PU SDA Bondowoso</p>
+                                        <p class="text-sm text-gray-500 rounded-lg border">Surat permohonan ditujukan kepada PU SDA Bondowoso</p>
                                     </div>
                                 </div>
                                 <input type="file" name="documents[surat_permohonan]" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                                    class="mt-1 block w-full text-sm text-gray-500
+                                    class="mt-1 block w-full text-sm text-gray-500 rounded-lg border
                                     file:mr-4 file:py-2 file:px-4
                                     file:rounded-md file:border-0
                                     file:text-sm file:font-semibold
