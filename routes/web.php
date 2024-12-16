@@ -38,7 +38,7 @@ Route::prefix('admin')->group(function () {
     // Guest routes (login, register)
     Route::middleware(['web', 'guest'])->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login.form');
-        Route::post('/login', [AuthController::class, 'login'])->name('admin.login')->middleware('login.limit');
+        Route::post('/login', [AuthController::class, 'login'])->name('admin.login');
         Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('admin.register.form');
         Route::post('/register', [AuthController::class, 'register'])->name('admin.register');
     });
