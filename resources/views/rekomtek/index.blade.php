@@ -10,6 +10,35 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .hero-section {
+            background-image: linear-gradient(rgba(37, 24, 90, 0.9), rgba(37, 24, 90, 0.9)), url("{{ asset('assets/img/bendungan-bendo.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-link {
+            @apply hover:text-primary-30 transition-colors duration-300;
+        }
+        
+        .section-title {
+            @apply font-bold text-3xl text-primary-50 mb-2;
+        }
+        
+        .section-divider {
+            @apply w-20 h-1 bg-primary-50 mb-8;
+        }
+        
+        .content-wrapper {
+            @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+        }
+    </style>
 </head>
 
 <body>
@@ -106,28 +135,24 @@
             </div>
         </div>
     </section>
-    <div class="bg-[url('{{ asset('assets/img/bendungan-bendo.jpeg') }}')] bg-no-repeat bg-cover bg-fixed">
-        <section class="bg-primary-90 bg-opacity-80">
-            <div class="flex flex-col items-center">
-                <div class="lg:w-[1170px] px-3 my-40 flex flex-col items-center">
-                    <div class="text-white text-center">
-                        <h3 class="font-bold text-2xl">
-                            Dinas PU Sumber Daya Air Kabupaten Bondowoso
-                        </h3>
-                        <div class="text-lg mt-10">
-                            <p>Pelayanan penerbitan rekomendasi teknis izin pengusahaan dan penggunaan sumber daya air
-                                <strong>"Berkas Lengkap" 23 Hari Kerja</strong>
-                            </p>
-                            <div class="font-bold mt-2 text-xl text-secondary">
-                                <p>GRATISSS!!!</p>
-                                <p>BEBAS PUNGLI</p>
-                            </div>
-                        </div>
-                    </div>
+   
+    <section class="hero-section">
+        <div class="content-wrapper text-center text-white">
+            <h3 class="text-3xl font-bold mb-8">
+                Dinas PU Sumber Daya Air Kabupaten Bondowoso
+            </h3>
+            <div class="max-w-3xl mx-auto">
+                <p class="text-xl mb-6">
+                    Pelayanan penerbitan rekomendasi teknis izin pengusahaan dan penggunaan sumber daya air
+                    <strong class="block mt-2">"Berkas Lengkap" 23 Hari Kerja</strong>
+                </p>
+                <div class="text-2xl font-bold text-secondary space-y-2">
+                    <p>GRATISSS!!!</p>
+                    <p>BEBAS PUNGLI</p>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
     <section id="guide" class="bg-slate-200 scroll-mt-16">
         <div class="flex flex-col items-center">
             <div class="lg:w-[1170px] px-3 my-20 flex flex-col items-center">
