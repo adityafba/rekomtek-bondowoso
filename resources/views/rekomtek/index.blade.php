@@ -7,32 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="{{ asset('assets/img/Bondowoso.png') }}" type="image/svg+xml">
     <title>Dashboard</title>
-    {{-- Font Awesome --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    {{-- Tailwind --}}
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            10: '#F3F1F9',
-                            20: '#DED8EF',
-                            30: '#C9BEE5',
-                            40: '#B4A4DB',
-                            50: '#25185A',
-                            60: '#1F144D',
-                            70: '#191040',
-                            80: '#140C33',
-                            90: '#0F0826',
-                        },
-                        secondary: '#FAD605',
-                    }
-                }
-            }
-        }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
 <body>
