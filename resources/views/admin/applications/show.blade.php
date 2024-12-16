@@ -9,10 +9,6 @@
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-semibold text-gray-800">Detail Permohonan</h2>
                         <div class="flex space-x-4">
-                            <a href="{{ route('admin.applications.edit', $application->id) }}" 
-                               class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                                Edit
-                            </a>
                             <a href="{{ route('admin.dashboard') }}" 
                                class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
                                 Kembali
@@ -20,6 +16,18 @@
                         </div>
                     </div>
                 </div>
+
+                @if(session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('error') }}</span>
+                    </div>
+                @endif
 
                 <!-- Status Section -->
                 <div class="mb-8 p-4 bg-gray-50 rounded-lg">
@@ -36,15 +44,71 @@
                                 </span>
                             </p>
                         </div>
-                        <button onclick="openStatusModal('{{ $application->id }}', '{{ $application->status }}')" 
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" type="button" 
                                 class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                            Update Status
-                        </button>
+                                Update Status
+                            </button>
+
+                            <div x-show="open" @click.away="open = false"
+                                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                                <div class="py-1" role="menu" aria-orientation="vertical">
+                                    @if($application->status !== 'review')
+                                        <form action="{{ route('admin.applications.update.status', $application->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="status" value="review">
+                                            <div class="px-4 py-2">
+                                                <label class="block text-sm font-medium text-gray-700">Catatan</label>
+                                                <textarea name="catatan" rows="2"
+                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                                    placeholder="Tambahkan catatan..."></textarea>
+                                            </div>
+                                            <button type="submit" 
+                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                Set to Review
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                    @if($application->status === 'review')
+                                        <form action="{{ route('admin.applications.update.status', $application->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="status" value="approved">
+                                            <div class="px-4 py-2">
+                                                <label class="block text-sm font-medium text-gray-700">Catatan</label>
+                                                <textarea name="catatan" rows="2"
+                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                                    placeholder="Tambahkan catatan..."></textarea>
+                                            </div>
+                                            <button type="submit" 
+                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                Set to Approved
+                                            </button>
+                                        </form>
+
+                                        <form action="{{ route('admin.applications.update.status', $application->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="status" value="rejected">
+                                            <div class="px-4 py-2">
+                                                <label class="block text-sm font-medium text-gray-700">Catatan</label>
+                                                <textarea name="catatan" rows="2"
+                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                                    placeholder="Tambahkan catatan..."></textarea>
+                                            </div>
+                                            <button type="submit" 
+                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                Set to Rejected
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    @if($application->admin_notes)
+                    @if($application->catatan)
                     <div class="mt-4">
-                        <h4 class="text-sm font-medium text-gray-700">Catatan Admin:</h4>
-                        <p class="mt-1 text-sm text-gray-600">{{ $application->admin_notes }}</p>
+                        <h4 class="text-sm font-medium text-gray-700">Catatan:</h4>
+                        <p class="mt-1 text-sm text-gray-600">{{ $application->catatan }}</p>
                     </div>
                     @endif
                 </div>
@@ -161,82 +225,8 @@
     </div>
 </div>
 
-<!-- Status Update Modal -->
-<div id="statusModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                    Update Status Permohonan
-                </h3>
-                <div class="mt-4">
-                    <div class="mb-4">
-                        <label for="statusSelect" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select id="statusSelect" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                            <option value="pending">Pending</option>
-                            <option value="review">Dalam Review</option>
-                            <option value="approved">Disetujui</option>
-                            <option value="rejected">Ditolak</option>
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <label for="adminNotes" class="block text-sm font-medium text-gray-700">Catatan Admin</label>
-                        <textarea id="adminNotes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="button" onclick="updateStatus()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                    Update
-                </button>
-                <button type="button" onclick="closeStatusModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                    Batal
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+@push('scripts')
+<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+@endpush
 
 @endsection
-
-@push('scripts')
-<script>
-    function openStatusModal(applicationId, currentStatus) {
-        document.getElementById('statusSelect').value = currentStatus;
-        document.getElementById('adminNotes').value = '{{ $application->admin_notes }}';
-        document.getElementById('statusModal').classList.remove('hidden');
-    }
-
-    function closeStatusModal() {
-        document.getElementById('statusModal').classList.add('hidden');
-    }
-
-    function updateStatus() {
-        const status = document.getElementById('statusSelect').value;
-        const adminNotes = document.getElementById('adminNotes').value;
-
-        fetch(`/admin/applications/{{ $application->id }}/status`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ status, admin_notes: adminNotes })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.reload();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while updating the status');
-        });
-    }
-</script>
-@endpush

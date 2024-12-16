@@ -33,7 +33,8 @@ class RekomtekApplication extends Model
         'jadwal_pelaksanaan',
         'rencana_pelaksanaan_mulai',
         'rencana_pelaksanaan_selesai',
-        'status'
+        'status',
+        'catatan'
     ];
 
     protected $casts = [

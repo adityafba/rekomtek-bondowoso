@@ -43,8 +43,8 @@ Route::prefix('admin')->group(function () {
         // Application routes
         Route::get('/applications/{id}', [DashboardController::class, 'show'])->name('admin.applications.show');
         Route::get('/applications/{id}/edit', [DashboardController::class, 'edit'])->name('admin.applications.edit');
-        Route::put('/applications/{id}', [DashboardController::class, 'update'])->name('admin.applications.update');
-        Route::put('/applications/{id}/status', [DashboardController::class, 'updateStatus'])->name('admin.applications.update.status');
+        Route::post('/applications/{id}', [DashboardController::class, 'update'])->name('admin.applications.update');
+        Route::post('/applications/{id}/status', [DashboardController::class, 'updateStatus'])->name('admin.applications.update.status');
         
         // Document routes
         Route::get('/documents/{id}/download', [DocumentController::class, 'download'])->name('admin.documents.download');
